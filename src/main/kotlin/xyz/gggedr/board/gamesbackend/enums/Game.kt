@@ -2,7 +2,7 @@ package xyz.gggedr.board.gamesbackend.enums
 
 import xyz.gggedr.board.gamesbackend.models.GameModel
 
-enum class Games(
+enum class Game(
     val displayName: String,
     val description: String,
     val icon: String,
@@ -15,7 +15,8 @@ enum class Games(
         return GameModel(
             this.displayName,
             this.description,
-            this.icon
+            this.icon,
+            this.name
         )
     }
 }
