@@ -1,4 +1,4 @@
-package xyz.gggedr.board.gamesbackend.messages
+package xyz.gggedr.board.gamesbackend.messages.party
 
 data class PartyClosed(
     val code: String,

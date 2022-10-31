@@ -3,9 +3,10 @@ package xyz.gggedr.board.gamesbackend.tasks
 import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
-import xyz.gggedr.board.gamesbackend.messages.PartyClosed
+import xyz.gggedr.board.gamesbackend.enums.PartyMessageType
+import xyz.gggedr.board.gamesbackend.messages.party.PartyClosed
+import xyz.gggedr.board.gamesbackend.messages.party.PartyMessage
 import xyz.gggedr.board.gamesbackend.repositories.PartyRepository
-import java.util.concurrent.TimeUnit
 
 @Component
 class ClosePartyTask(
@@ -19,7 +20,7 @@ class ClosePartyTask(
         partyRepository.saveAll(parties.map { it.copy(closed = true, closedReason = "Party expired") })
 
         for (party in parties) {
-            simpMessagingTemplate.convertAndSend("/game/"+ party.code, PartyClosed(party.code, "Party expired"))
+            simpMessagingTemplate.convertAndSend("/game/"+ party.code, PartyMessage(PartyMessageType.CLOSE, PartyClosed(party.code, "Party expired")))
         }
     }
 
