@@ -10,6 +10,6 @@ interface PartyRepository : JpaRepository<Party, Long> {
 
     fun findPartyByCodeAndGameTypeAndClosed(code: String, gameType: Game, closed: Boolean): Party?
 
-    fun findAllByClosedAndExpirationDateAfter(closed: Boolean, expirationDate: Long): List<Party>
+    fun findAllByClosedAndExpirationDateBefore(closed: Boolean, expirationDate: Long): List<Party>
 
 }

@@ -16,7 +16,7 @@ class ClosePartyTask(
 
     @Scheduled(fixedRate = (1000*60))
     fun closeParties() {
-        val parties = partyRepository.findAllByClosedAndExpirationDateAfter(false, System.currentTimeMillis())
+        val parties = partyRepository.findAllByClosedAndExpirationDateBefore(false, System.currentTimeMillis())
         partyRepository.saveAll(parties.map { it.copy(closed = true, closedReason = "Party expired") })
 
         for (party in parties) {
