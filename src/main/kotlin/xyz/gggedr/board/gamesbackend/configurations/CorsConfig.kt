@@ -13,7 +13,8 @@ class CorsConfig : WebMvcConfigurer {
         registry.addMapping("/**")
             .allowedOrigins("*")
             .allowedHeaders("*")
-            .allowedMethods("*");
+            .allowedMethods("*")
+            .allowCredentials(false)
     }
 
 }
