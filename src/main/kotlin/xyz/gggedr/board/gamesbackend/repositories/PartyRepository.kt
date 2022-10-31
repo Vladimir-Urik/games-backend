@@ -8,6 +8,8 @@ import xyz.gggedr.board.gamesbackend.enums.Game
 @Repository
 interface PartyRepository : JpaRepository<Party, Long> {
 
-    fun findPartyByCodeAndGameType(code: String, gameType: Game): Party?
+    fun findPartyByCodeAndGameTypeAndClosed(code: String, gameType: Game, closed: Boolean): Party?
+
+    fun findAllByClosedAndExpirationDateAfter(closed: Boolean, expirationDate: Long): List<Party>
 
 }
