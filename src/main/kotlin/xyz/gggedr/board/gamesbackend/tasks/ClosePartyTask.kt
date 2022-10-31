@@ -1,19 +1,26 @@
 package xyz.gggedr.board.gamesbackend.tasks
 
+import org.springframework.messaging.simp.SimpMessagingTemplate
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
+import xyz.gggedr.board.gamesbackend.messages.PartyClosed
 import xyz.gggedr.board.gamesbackend.repositories.PartyRepository
 import java.util.concurrent.TimeUnit
 
 @Component
 class ClosePartyTask(
-    private val partyRepository: PartyRepository
+    private val partyRepository: PartyRepository,
+    private val simpMessagingTemplate: SimpMessagingTemplate
 ) {
 
     @Scheduled(fixedRate = (1000*60))
     fun closeParties() {
         val parties = partyRepository.findAllByClosedAndExpirationDateAfter(false, System.currentTimeMillis())
-        partyRepository.saveAll(parties.map { it.copy(closed = true) })
+        partyRepository.saveAll(parties.map { it.copy(closed = true, closedReason = "Party expired") })
+
+        for (party in parties) {
+            simpMessagingTemplate.convertAndSend("/game/"+ party.code, PartyClosed(party.code, "Party expired"))
+        }
     }
 
 }
