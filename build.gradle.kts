@@ -33,7 +33,7 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")
 	testImplementation("org.springframework.security:spring-security-test")
-	runtimeOnly("org.postgresql:postgresql:42.5.0")
+	runtimeOnly("org.postgresql:postgresql:42.5.2")
 }
 
 tasks.withType<KotlinCompile> {
